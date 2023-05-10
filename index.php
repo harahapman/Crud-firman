@@ -9,7 +9,7 @@ if (!$koneksi) { //cek koneksi
     die("Tidak bisa terkoneksi ke database");
 }
 
-$nim = "";
+$nisn = "";
 $nama = "";
 $alamat = "";
 $jurusan = "";
@@ -36,24 +36,24 @@ $eror = "";
         $sql1       ="select * from mahasiswa where id = '$id'";
         $q1         =mysqli_query($koneksi,$sql1);
         $r1         =mysqli_fetch_array($q1);
-        $nim        =$r1['nim'];
+        $nisn        =$r1['nisn'];
         $nama       =$r1['nama'];
         $alamat     =$r1['alamat'];
         $jurusan    =$r1['jurusan'];
 
-        if($nim ==''){
+        if($nisn ==''){
             $eror ="data tidak ditemukan";
         }
     }
 if (isset($_POST['simpan'])) { //untuk create
-    $nim = $_POST['nim'];
+    $nisn = $_POST['nisn'];
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
     $jurusan = $_POST['jurusan'];
 
-    if ($nim && $nama && $alamat && $jurusan) {
+    if ($nisn && $nama && $alamat && $jurusan) {
         if($op =='edit'){
-            $sql1       ="update mahasiswa set nim ='$nim',nama='$nama',alamat='$alamat',jurusan='$jurusan' where id ='$id'";
+            $sql1       ="update mahasiswa set nisn ='$nisn',nama='$nama',alamat='$alamat',jurusan='$jurusan' where id ='$id'";
             $q1         =mysqli_query($koneksi,$sql1);
             if($q1){
                 $sukses ="Data Berhasil Di Update";
@@ -61,7 +61,7 @@ if (isset($_POST['simpan'])) { //untuk create
                 $eror   ="Data gagal di update";
             }
         }else{
-             $sql1 = "insert into mahasiswa(nim,nama,alamat,jurusan) values ('$nim','$nama','$alamat','$jurusan')";
+             $sql1 = "insert into mahasiswa(nisn,nama,alamat,jurusan) values ('$nisn','$nama','$alamat','$jurusan')";
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
             $sukses = "Berhasil memasukkan data baru";
@@ -93,17 +93,27 @@ if (isset($_POST['simpan'])) { //untuk create
         .card {
             margin-top: 10px
         }
+        .banner {
+    background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("banner.jpeg") no-repeat center center;
+    background-size:cover;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color:#fff
+        }
     </style>
 </head>
 
 <body>
+<div class="container-fluid banner">
+    <div class="container text-center">
+        <h2 class="display-6" >Selamat Datang di Website Data Mahasiswa</h2>
     <div class="mx-auto">
         <!-----untuk mengisi data--->
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-secondary">
                 Create / Edit Data
             </div>
-            <div class="card-body">
+            <div class="card-body bg-dark">
                 <?php
                 if ($eror) {
                     ?>
@@ -127,9 +137,9 @@ if (isset($_POST['simpan'])) { //untuk create
                     ?>
                     <form action="" method="POST">
                         <div class="mb-3 row">
-                            <label for="nim" class="col-sm-2 col-form-label">NIM</label>
+                            <label for="nisn" class="col-sm-2 col-form-label">NISN</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="nim" name="nim" value="<?php echo $nim ?>">
+                                <input type="text" class="form-control" id="nisn" name="nisn" value="<?php echo $nisn ?>">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -183,7 +193,7 @@ if (isset($_POST['simpan'])) { //untuk create
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Nim</th>
+                            <th scope="col">Nisn</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Alamat</th>
                             <th scope="col">Jurusan</th>
@@ -196,6 +206,7 @@ if (isset($_POST['simpan'])) { //untuk create
                                         $urut = 1;
                                         while ($r2 = mysqli_fetch_array($q2)) {
                                             $id = $r2['id'];
+                                            $nisn =$r2['nisn'];
                                             $nama = $r2['nama'];
                                             $alamat = $r2['alamat'];
                                             $jurusan = $r2['jurusan'];
@@ -205,7 +216,7 @@ if (isset($_POST['simpan'])) { //untuk create
                                 <?php echo $urut++ ?>
                             </th>
                             <td scope="row">
-                                <?php echo $nim ?>
+                                <?php echo $nisn ?>
                             </td>
                             <td scope="row">
                                 <?php echo $nama ?>
@@ -231,6 +242,8 @@ if (isset($_POST['simpan'])) { //untuk create
                 </table>
             </div>
         </div>
+        </div>
+</div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
             crossorigin="anonymous"></script>
